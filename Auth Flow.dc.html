@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#1d4ed8">
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="800" fill="#1d4ed8"/>
+<rect x="450" y="260" width="300" height="280" rx="16" fill="#ffffff" fill-opacity="0.95"/>
+<circle cx="600" cy="360" r="40" fill="#1d4ed8"/>
+<rect x="530" y="430" width="140" height="14" rx="7" fill="#93c5fd"/>
+<rect x="530" y="460" width="140" height="14" rx="7" fill="#93c5fd"/>
+</svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/credential-connections-design-system-081ce699-1423-4ee3-8e65-465674c518bc/colors_and_type.css">
+<style>
+@keyframes cc-spin { to { transform: rotate(360deg); } }
+.rail-id-tip { opacity: 0; visibility: hidden; transition: opacity .15s ease; }
+.rail-id:hover .rail-id-tip, .rail-id:focus-visible .rail-id-tip { opacity: 1; visibility: visible; }
+.rail-id:hover { background: rgba(0,0,0,0.05) !important; }
+.cc-nav-icon:hover { background: var(--gray-100) !important; color: var(--gray-900) !important; }
+.cc-btn-primary:hover { background: var(--blue-700) !important; }
+.cc-btn-secondary:hover { background: var(--gray-50) !important; }
+.cc-link-muted:hover { color: var(--gray-800) !important; }
+.cc-link-blue:hover { color: var(--blue-900) !important; }
+</style>
+</helmet>
+<div style="min-height: 100vh; background: var(--gray-50); display: flex; flex-direction: column;">
+
+  <header style="width: 100%; position: fixed; top: 0; left: 0; z-index: 55; background: #ffffff; border-bottom: 1px solid var(--gray-200); box-sizing: border-box;">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 60px; gap: 16px;">
+      <img src="assets/logos/credential-logo-v2.png" alt="Credential Connections" width="126" height="23" style="display: block; flex-shrink: 0;">
+      <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+        <div class="rail-id" style="position: relative; display: inline-flex; border-radius: 12px;">
+          <button type="button" onClick="{{ toggleHelp }}" data-help-trigger="" aria-haspopup="menu" aria-expanded="{{ helpExpanded }}" aria-label="Help" class="cc-nav-icon" style="{{ navIconStyle }}">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+          </button>
+          <sc-if value="{{ showHelpTip }}" hint-placeholder-val="{{ true }}">
+            <div class="rail-id-tip" style="{{ tipStyle }}">About</div>
+          </sc-if>
+          <sc-if value="{{ helpOpen }}" hint-placeholder-val="{{ false }}">
+            <div role="menu" aria-label="Help" data-help-menu="" style="{{ helpMenuStyle }}">
+              <a href="{{ privacyHref }}" target="_blank" rel="noopener" role="menuitem" style="{{ helpMenuItemStyle }}" style-hover="{{ helpMenuItemHover }}">Privacy policy<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path></svg></a>
+              <a href="{{ termsHref }}" target="_blank" rel="noopener" role="menuitem" style="{{ helpMenuItemStyle }}" style-hover="{{ helpMenuItemHover }}">Terms &amp; conditions<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path></svg></a>
+            </div>
+          </sc-if>
+        </div>
+        <div class="rail-id" style="position: relative; display: inline-flex; border-radius: 12px;">
+          <button type="button" aria-label="Support" class="cc-nav-icon" style="{{ navIconStyle }}">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          </button>
+          <div class="rail-id-tip" style="{{ tipStyle }}">Support</div>
+        </div>
+        <button type="button" onClick="{{ goLogin }}" class="cc-btn-primary" style="{{ headerLoginBtnStyle }}">Log in</button>
+      </div>
+    </div>
+  </header>
+
+  <main style="flex: 1; display: flex; justify-content: center; align-items: center; padding: 92px 16px 32px;">
+    <div style="{{ cardStyle }}">
+
+      <!-- ============ CREDENTIAL LINK VERIFICATION (only when arriving from the emailed credential link) ============ -->
+      <sc-if value="{{ isLinkVerify }}" hint-placeholder-val="{{ false }}">
+        <img src="assets/logos/cc-icon.png" alt="Credential Connections" style="height: 23px; display: block; margin: 0 auto 20px; width: 42px">
+        <h1 style="{{ h1Style }}">Verify your identity</h1>
+        <p style="{{ subStyle }}">We sent a verification code to {{ linkEmailMasked }}. Enter it below, or use the link in that email to continue.</p>
+
+        <label for="lv-code" style="{{ labelStyle }}">Verification code</label>
+        <input id="lv-code" type="text" inputmode="numeric" maxlength="6" placeholder="123456" value="{{ linkCode }}" onInput="{{ onLinkCode }}" style="{{ codeInputStyle }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+
+        <button type="button" onClick="{{ onLinkVerifyContinue }}" class="cc-btn-primary" style="{{ primaryBtnStyle }}">Continue</button>
+        <sc-if value="{{ hasCredToken }}" hint-placeholder-val="{{ false }}">
+          <p style="text-align: center; margin: 14px 0 0; font: var(--fw-regular) var(--text-xs-size)/var(--text-xs-lh) var(--font-body); color: var(--gray-500);">Credential ID: {{ credTokenDisplay }}</p>
+        </sc-if>
+        <p style="text-align: center; margin: 10px 0 0;"><button type="button" class="cc-link-blue" style="background: none; border: none; padding: 0; font: 500 14px/20px var(--font-body); color: var(--blue-800); cursor: pointer;">Resend code</button></p>
+
+      </sc-if>
+
+      <!-- ============ LOGIN ============ -->
+      <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+        <img src="assets/logos/cc-icon.png" alt="Credential Connections" style="height: 23px; display: block; margin: 0 auto 20px; width: 42px">
+        <h1 style="font: var(--fw-semibold) 24px/1.3 var(--font-body); color: var(--gray-900); text-align: center; margin: 0 0 6px;">Log in to your account</h1>
+        <p style="font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-600); text-align: center; margin: 0 0 20px;">Welcome to Credential Connections! Please enter your details to access your credentials.</p>
+
+        <div>
+          <label for="li-email" style="display: block; font: var(--fw-medium) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-700); margin-bottom: 6px;">Email</label>
+          <input id="li-email" type="email" placeholder="name@example.com" value="{{ liEmail }}" onInput="{{ onLiEmail }}" style="{{ inputStyleMb }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+        </div>
+
+        <div style="margin-bottom: 8px;">
+          <label for="li-pw" style="display: block; font: var(--fw-medium) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-700); margin-bottom: 6px;">Password</label>
+          <input id="li-pw" type="password" placeholder="Enter your password" value="{{ liPw }}" onInput="{{ onLiPw }}" style="{{ inputBaseStyle }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+        </div>
+        <div style="text-align: left; margin: 10px 0 20px">
+          <button type="button" onClick="{{ goForgot }}" class="cc-link-muted" style="background: none; border: none; padding: 0; cursor: pointer; font: var(--fw-medium) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-600); text-decoration: none">Forgot password?</button>
+        </div>
+
+        <button type="button" onClick="{{ onLogin }}" aria-busy="{{ loading }}" class="cc-btn-primary" style="{{ submitStyle }}">
+          Log in
+          <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation: cc-spin 0.7s linear infinite;"><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+          </sc-if>
+        </button>
+
+        <p style="text-align: center; margin: 20px 0 0; font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-600);">Don't have an account? <button type="button" onClick="{{ goCreate }}" class="cc-link-blue" style="background: none; border: none; padding: 0; cursor: pointer; color: var(--blue-800); font: var(--fw-medium) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); text-decoration: none;">Create one</button></p>
+      </sc-if>
+
+      <!-- ============ FORGOT PASSWORD ============ -->
+      <sc-if value="{{ isForgot }}" hint-placeholder-val="{{ false }}">
+        <img src="assets/logos/cc-icon.png" alt="Credential Connections" style="height: 23px; display: block; margin: 0 auto 20px; width: 42px">
+
+        <sc-if value="{{ isFpRequest }}" hint-placeholder-val="{{ true }}">
+          <h1 style="{{ h1Style }}">Reset your password</h1>
+          <p style="{{ subStyle }}">Enter the email on your account and we'll send you a link to reset your password.</p>
+          <label for="fp-email" style="{{ labelStyle }}">Email</label>
+          <input id="fp-email" type="email" placeholder="name@example.com" value="{{ fpEmail }}" onInput="{{ onFpEmail }}" style="{{ inputStyleMb }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+          <button type="button" onClick="{{ onFpSend }}" class="cc-btn-primary" style="{{ primaryBtnStyle }}">Send reset link</button>
+          <p style="{{ backRowStyle }}"><button type="button" onClick="{{ goLogin }}" class="cc-link-blue" style="{{ linkBtnStyle }}">Back to log in</button></p>
+        </sc-if>
+
+        <sc-if value="{{ isFpSent }}" hint-placeholder-val="{{ false }}">
+          
+          <h1 style="{{ h1Style }}">Check your email</h1>
+          <p style="{{ subStyle }}">If an account exists for that email, we've sent a link to reset your password. The link expires in 30 minutes.</p>
+          <button type="button" class="cc-btn-secondary" style="{{ secondaryBtnStyle }}">Resend link</button>
+          <p style="{{ backRowStyle }}"><button type="button" onClick="{{ goLogin }}" class="cc-link-blue" style="{{ linkBtnStyle }}">Back to log in</button></p>
+        </sc-if>
+
+        <sc-if value="{{ isFpReset }}" hint-placeholder-val="{{ false }}">
+          <h1 style="{{ h1Style }}">Set a new password</h1>
+          <p style="{{ subStyle }}">Choose a new password for maya.wright@gmail.com.</p>
+          <label for="fp-pw1" style="{{ labelStyle }}">New password</label>
+          <input id="fp-pw1" type="password" placeholder="Enter new password" value="{{ fpPw1 }}" onInput="{{ onFpPw1 }}" style="{{ inputStyleMb }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+          <div style="display: flex; gap: 4px; margin: -10px 0 10px;">
+            <sc-for list="{{ strengthBars }}" as="b" hint-placeholder-count="3">
+              <span style="{{ b.style }}"></span>
+            </sc-for>
+          </div>
+          <ul style="margin: 0 0 16px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px;">
+            <sc-for list="{{ fpRules }}" as="r" hint-placeholder-count="3">
+              <li style="{{ r.style }}">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="{{ r.iconStyle }}"><path d="M20 6L9 17l-5-5"></path></svg>
+                {{ r.label }}
+              </li>
+            </sc-for>
+          </ul>
+          <label for="fp-pw2" style="{{ labelStyle }}">Confirm password</label>
+          <input id="fp-pw2" type="password" placeholder="Re-enter new password" value="{{ fpPw2 }}" onInput="{{ onFpPw2 }}" style="{{ inputBaseStyle }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+          <button type="button" onClick="{{ onFpReset }}" class="cc-btn-primary" style="{{ primaryBtnStyleMt }}">Reset password</button>
+        </sc-if>
+
+        <sc-if value="{{ isFpSuccess }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ iconCircleSuccessStyle }}">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--success-700)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+          </div>
+          <h1 style="{{ h1Style }}">Password reset</h1>
+          <p style="{{ subStyle }}">Your password has been changed. Log in with your new password to continue.</p>
+          <button type="button" onClick="{{ goLogin }}" class="cc-btn-primary" style="{{ primaryLinkBtnStyle }}">Back to log in</button>
+        </sc-if>
+
+        <sc-if value="{{ isFpExpired }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ iconCircleErrorStyle }}">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--error-600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5"></path><path d="M12 16h.01"></path><circle cx="12" cy="12" r="10"></circle></svg>
+          </div>
+          <h1 style="{{ h1Style }}">This link has expired</h1>
+          <p style="{{ subStyle }}">Password reset links are only valid for 30 minutes. Request a new one to continue.</p>
+          <button type="button" onClick="{{ onFpRequestNew }}" class="cc-btn-primary" style="{{ primaryBtnStyleMt }}">Request a new link</button>
+        </sc-if>
+      </sc-if>
+
+      <!-- ============ CREATE ACCOUNT ============ -->
+      <sc-if value="{{ isCreate }}" hint-placeholder-val="{{ false }}">
+        <img src="assets/logos/cc-icon.png" alt="Credential Connections" style="height: 23px; display: block; margin: 0 auto 20px; width: 42px">
+
+        <sc-if value="{{ isCaForm }}" hint-placeholder-val="{{ true }}">
+          <h1 style="{{ h1Style }}">Create your account</h1>
+          <p style="{{ subStyle }}">Add a personal email so you can access your credentials after graduation.</p>
+
+          <button type="button" onClick="{{ onGoogleContinue }}" class="cc-btn-secondary" style="{{ googleBtnStyle }}">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"></path><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A10.99 10.99 0 0 0 12 23z"></path><path fill="#FBBC05" d="M5.84 14.09A6.6 6.6 0 0 1 5.5 12c0-.73.12-1.43.34-2.09V7.07H2.18A11 11 0 0 0 1 12c0 1.77.43 3.45 1.18 4.93l3.66-2.84z"></path><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1a10.99 10.99 0 0 0-9.82 6.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"></path></svg>
+            Continue with Google
+          </button>
+
+          <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0;">
+            <span style="flex: 1; height: 1px; background: var(--gray-200);"></span>
+            <span style="font: var(--fw-medium) var(--text-xs-size)/var(--text-xs-lh) var(--font-body); color: var(--gray-500);">OR</span>
+            <span style="flex: 1; height: 1px; background: var(--gray-200);"></span>
+          </div>
+
+          <label for="ca-name" style="{{ labelStyle }}">Full name</label>
+          <input id="ca-name" type="text" placeholder="Enter your full name" value="{{ caName }}" onInput="{{ onCaName }}" style="{{ inputStyleMb }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+
+          <label for="ca-email" style="{{ labelStyle }}">Personal email</label>
+          <input id="ca-email" type="email" placeholder="jordan.smith@gmail.com" value="{{ caEmail }}" onInput="{{ onCaEmail }}" style="{{ inputStyleMb }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+
+          <label for="ca-pw" style="{{ labelStyle }}">Password <span style="color: var(--blue-600);">*</span></label>
+          <input id="ca-pw" type="password" placeholder="Create a password" value="{{ caPw1 }}" onInput="{{ onCaPw1 }}" style="{{ inputStyleMbSm }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+          <ul style="margin: 0 0 16px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px;">
+            <sc-for list="{{ caRules }}" as="r" hint-placeholder-count="2">
+              <li style="{{ r.style }}">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="{{ r.iconStyle }}"><path d="M20 6L9 17l-5-5"></path></svg>
+                {{ r.label }}
+              </li>
+            </sc-for>
+          </ul>
+
+          <label for="ca-pw2" style="{{ labelStyle }}">Confirm password</label>
+          <input id="ca-pw2" type="password" placeholder="Create a password" value="{{ caPw2 }}" onInput="{{ onCaPw2 }}" style="{{ inputBaseStyle }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+
+          <label style="display: flex; align-items: flex-start; gap: 10px; margin: 18px 0 4px; cursor: pointer;">
+            <span style="position: relative; width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;">
+              <input type="checkbox" checked="{{ caTerms }}" onChange="{{ onCaTerms }}" style="position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer;">
+              <span style="{{ checkboxBoxStyle }}">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="{{ checkboxTickStyle }}"><path d="M20 6 9 17l-5-5"></path></svg>
+              </span>
+            </span>
+            <span style="font: 400 14px/20px var(--font-body); color: var(--gray-700);">I agree to the <a href="#" class="cc-link-blue" style="color: var(--blue-700); font-weight: 500;">Terms of Service</a> and <a href="#" class="cc-link-blue" style="color: var(--blue-700); font-weight: 500;">Privacy Policy</a>.</span>
+          </label>
+          <div style="margin-top: 20px;">
+          <button type="button" onClick="{{ onCaSubmit }}" aria-busy="{{ loading }}" class="cc-btn-primary" style="{{ submitStyle }}">
+            Get started
+            <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="animation: cc-spin 0.7s linear infinite;"><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+            </sc-if>
+          </button>
+          </div>
+          <p style="text-align: center; margin: 20px 0 0; font: 400 14px/20px var(--font-body); color: var(--gray-600);">Already have an account? <button type="button" onClick="{{ goLogin }}" class="cc-link-blue" style="background: none; border: none; padding: 0; cursor: pointer; color: var(--blue-800); font: 500 14px/20px var(--font-body); text-decoration: none;">Log in</button></p>
+        </sc-if>
+
+        <sc-if value="{{ isCaVerify }}" hint-placeholder-val="{{ false }}">
+          <h1 style="{{ h1Style }}">Verify your email</h1>
+          <p style="{{ subStyle }}">We sent a 6-digit code to {{ caEmailValue }}. Enter it below to verify your account.</p>
+          <label for="ca-code" style="{{ labelStyle }}">Verification code</label>
+          <input id="ca-code" type="text" inputmode="numeric" maxlength="6" placeholder="123456" value="{{ caCode }}" onInput="{{ onCaCode }}" style="{{ codeInputStyle }}" style-focus="box-shadow: inset 0 0 0 2px var(--blue-600) !important;">
+          <button type="button" onClick="{{ onCaVerify }}" class="cc-btn-primary" style="{{ primaryBtnStyle }}">Verify</button>
+          <p style="text-align: center; margin: 16px 0 0;"><button type="button" class="cc-link-blue" style="background: none; border: none; padding: 0; font: 500 14px/20px var(--font-body); color: var(--blue-800); cursor: pointer;">Resend code</button></p>
+          <p style="text-align: center; margin: 12px 0 0;"><button type="button" onClick="{{ onCaBack }}" class="cc-link-muted" style="background: none; border: none; padding: 0; font: 500 14px/20px var(--font-body); color: var(--gray-600); cursor: pointer;">Back</button></p>
+        </sc-if>
+
+        <sc-if value="{{ isCaSuccess }}" hint-placeholder-val="{{ false }}">
+          
+          <h1 style="{{ h1Style }}">You're verified</h1>
+          <p style="{{ subStyle }}">Your account is linked to the Certificate of Completion from Virginia Hanock University.</p>
+          <a href="{{ storeHrefNewAccount }}" class="cc-btn-primary" style="{{ primaryLinkStyle }}">View your credentials</a>
+        </sc-if>
+      </sc-if>
+
+    </div>
+  </main>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  DEMO_LINK_CODE = "482915";
+  LINK_EMAIL = "maya.wright@vh.edu.com";
+
+  // Arriving via the emailed credential link looks like ?src=email&token=<credential-token>.
+  // A direct visit to Auth Flow (bookmarked, typed URL, nav link) never carries these params,
+  // so it skips straight to the normal Login screen.
+  urlParams() { return (typeof window !== "undefined") ? new URLSearchParams(window.location.search) : new URLSearchParams(); }
+  state = {
+    mode: this.urlParams().get("src") === "email" ? "linkVerify" : "login",
+    credToken: this.urlParams().get("token") || "",
+    linkCode: "",
+    fpStep: "request", caStep: "form",
+    liEmail: "", liPw: "",
+    fpEmail: "", fpPw1: "", fpPw2: "",
+    caName: "", caEmail: "", caPw1: "", caPw2: "", caTerms: false, caCode: "",
+    loading: false,
+    helpOpen: false,
+  };
+  toggleHelp = () => this.setState((s) => ({ helpOpen: !s.helpOpen }));
+  closeHelp = () => this.setState({ helpOpen: false });
+  componentDidMount() {
+    this._onHelpDocDown = (e) => {
+      if (this.state.helpOpen && !e.target.closest("[data-help-menu]") && !e.target.closest("[data-help-trigger]")) this.closeHelp();
+    };
+    this._onHelpKey = (e) => { if (e.key === "Escape" && this.state.helpOpen) this.closeHelp(); };
+    document.addEventListener("mousedown", this._onHelpDocDown);
+    document.addEventListener("keydown", this._onHelpKey);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this._onHelpDocDown);
+    document.removeEventListener("keydown", this._onHelpKey);
+  }
+  goLogin = () => this.setState({ mode: "login" });
+  goForgot = () => this.setState({ mode: "forgot", fpStep: "request" });
+  goCreate = () => this.setState({ mode: "create", caStep: "form" });
+  onField = (field) => (e) => this.setState({ [field]: e.target.value });
+
+  onLinkCode = (e) => this.setState({ linkCode: e.target.value.replace(/[^0-9]/g, "").slice(0, 6) });
+  // Prototype-only: a real build requires the actual emailed code/link. This just unblocks the demo.
+  onLinkVerifyContinue = () => {
+    this.setState({ linkCode: this.state.linkCode || this.DEMO_LINK_CODE, mode: "login" });
+  };
+
+  // NOTE for implementation: credToken identifies the credential from the emailed link. Once
+  // login or signup succeeds below, call the attach-credential API with credToken against the
+  // resulting account — this happens AFTER auth succeeds, never before.
+  storeUrl(extra) {
+    const p = new URLSearchParams();
+    p.set("boot", "1");
+    if (this.state.credToken) p.set("claim", this.state.credToken);
+    Object.keys(extra || {}).forEach((k) => p.set(k, extra[k]));
+    return "Credential%20Store%20Centered.dc.html?" + p.toString();
+  }
+
+  onLogin = () => {
+    if (this.state.loading) return;
+    this.setState({
+      liEmail: this.state.liEmail || "maya.wright@gmail.com",
+      liPw: this.state.liPw || "Password123!",
+      loading: true,
+    });
+    setTimeout(() => {
+      window.location.href = this.storeUrl({ welcome: "1" });
+    }, 700);
+  };
+
+  renderVals() {
+    const { mode, fpStep, caStep, liEmail, liPw, fpEmail, fpPw1, fpPw2, caName, caEmail, caPw1, caPw2, caTerms, caCode, loading, linkCode } = this.state;
+
+    const inputBase = { width: "100%", height: "40px", padding: "0 12px", borderRadius: "var(--radius-md)", font: "400 14px/20px var(--font-body)", color: "var(--gray-900)", boxSizing: "border-box", boxShadow: "inset 0 0 0 1px var(--gray-300)", border: "none", outline: "none" };
+    const btnBase = { display: "inline-flex", alignItems: "center", justifyContent: "center", height: "38px", padding: "0 16px", whiteSpace: "nowrap", borderRadius: "var(--radius-md)", textDecoration: "none", font: "var(--fw-semibold) var(--text-sm-size)/var(--text-sm-lh) var(--font-body)", boxSizing: "border-box", cursor: "pointer" };
+
+    const fpHasLen = fpPw1.length >= 8, fpHasNum = /[0-9]/.test(fpPw1), fpHasSym = /[^A-Za-z0-9]/.test(fpPw1);
+    const fpScore = [fpHasLen, fpHasNum, fpHasSym].filter(Boolean).length;
+    const fpBarColor = (i) => (fpScore >= i ? (fpScore === 1 ? "var(--error-500)" : fpScore === 2 ? "var(--warning-500)" : "var(--success-500)") : "var(--gray-200)");
+    const strengthBars = [1, 2, 3].map((i) => ({ style: { flex: 1, height: "4px", borderRadius: "2px", background: fpBarColor(i) } }));
+    const ruleStyle = (ok) => ({ display: "flex", alignItems: "center", gap: "6px", font: "400 13px/18px var(--font-body)", color: ok ? "var(--gray-700)" : "var(--gray-400)" });
+    const fpRules = [
+      { label: "At least 8 characters", style: ruleStyle(fpHasLen), iconStyle: { stroke: fpHasLen ? "var(--success-700)" : "var(--gray-300)" } },
+      { label: "At least one number", style: ruleStyle(fpHasNum), iconStyle: { stroke: fpHasNum ? "var(--success-700)" : "var(--gray-300)" } },
+      { label: "At least one symbol", style: ruleStyle(fpHasSym), iconStyle: { stroke: fpHasSym ? "var(--success-700)" : "var(--gray-300)" } },
+    ];
+
+    const caHasSym = /[^A-Za-z0-9]/.test(caPw1), caHasLen12 = caPw1.length >= 12;
+    const caRules = [
+      { label: "One special character", style: ruleStyle(caHasSym), iconStyle: { stroke: caHasSym ? "var(--success-700)" : "var(--gray-300)" } },
+      { label: "12+ characters", style: ruleStyle(caHasLen12), iconStyle: { stroke: caHasLen12 ? "var(--success-700)" : "var(--gray-300)" } },
+    ];
+
+    return {
+      isLogin: mode === "login", isForgot: mode === "forgot", isCreate: mode === "create", isLinkVerify: mode === "linkVerify",
+      isFpRequest: fpStep === "request", isFpSent: fpStep === "sent", isFpReset: fpStep === "reset", isFpSuccess: fpStep === "success", isFpExpired: fpStep === "expired",
+      isCaForm: caStep === "form", isCaVerify: caStep === "verify", isCaSuccess: caStep === "success",
+      loading,
+      goLogin: this.goLogin, goForgot: this.goForgot, goCreate: this.goCreate, onLogin: this.onLogin,
+
+      linkCode, onLinkCode: this.onLinkCode, onLinkVerifyContinue: this.onLinkVerifyContinue,
+      hasCredToken: !!this.state.credToken, credTokenDisplay: this.state.credToken,
+
+      toggleHelp: this.toggleHelp, helpOpen: this.state.helpOpen, helpExpanded: this.state.helpOpen ? "true" : "false",
+      showHelpTip: !this.state.helpOpen,
+      privacyHref: "https://www.paradigm-corp.com/privacy-policy/", termsHref: "https://www.paradigm-corp.com/terms/",
+      helpMenuStyle: { position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 90, minWidth: 180, background: "#ffffff", border: "1px solid var(--gray-200)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-lg)", padding: 6, display: "flex", flexDirection: "column", gap: 2 },
+      helpMenuItemStyle: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, width: "100%", boxSizing: "border-box", textAlign: "left", background: "transparent", border: "none", borderRadius: "var(--radius-sm)", padding: "9px 10px", cursor: "pointer", font: "var(--fw-medium) var(--text-sm-size)/var(--text-sm-lh) var(--font-body)", color: "var(--gray-800)", textDecoration: "none" },
+      helpMenuItemHover: { background: "var(--gray-100)" },
+      linkEmailMasked: this.LINK_EMAIL.charAt(0) + "******@" + this.LINK_EMAIL.split("@")[1],
+      onGoogleContinue: () => { this.setState({ caEmail: caEmail || "jordan.smith@gmail.com" }); window.location.href = this.storeUrl({}); },
+      storeHrefNewAccount: this.storeUrl({}),
+
+      liEmail, liPw,
+      onLiEmail: this.onField("liEmail"), onLiPw: this.onField("liPw"),
+
+      fpEmail,
+      onFpEmail: this.onField("fpEmail"),
+      onFpSend: () => this.setState({ fpEmail: fpEmail || "maya.wright@gmail.com", fpStep: "sent" }),
+      onFpReset: () => this.setState({ fpPw1: fpPw1 || "NewPassword123!", fpPw2: fpPw2 || "NewPassword123!", fpStep: "success" }),
+      onFpRequestNew: () => this.setState({ fpStep: "request" }),
+      fpPw1, fpPw2, fpRules, strengthBars,
+      onFpPw1: this.onField("fpPw1"), onFpPw2: this.onField("fpPw2"),
+
+      caEmailValue: caEmail || "maya.wright@gmail.com",
+      caName, caEmail, caPw1, caPw2, caTerms, caRules,
+      onCaName: this.onField("caName"), onCaEmail: this.onField("caEmail"),
+      onCaPw1: this.onField("caPw1"), onCaPw2: this.onField("caPw2"),
+      onCaTerms: (e) => this.setState({ caTerms: e.target.checked }),
+      checkboxBoxStyle: { position: "absolute", inset: 0, borderRadius: "4px", background: caTerms ? "var(--blue-600)" : "#ffffff", border: caTerms ? "1px solid var(--blue-600)" : "1px solid var(--gray-300)", display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", transition: "background 0.15s ease, border-color 0.15s ease" },
+      checkboxTickStyle: { opacity: caTerms ? 1 : 0, transition: "opacity 0.1s ease" },
+      onCaSubmit: () => {
+        if (this.state.loading) return;
+        this.setState({
+          caName: caName || "Maya Wright",
+          caEmail: caEmail || "maya.wright@gmail.com",
+          caPw1: caPw1 || "Password123!",
+          caPw2: caPw2 || "Password123!",
+          caTerms: true,
+          loading: true,
+        });
+        setTimeout(() => this.setState({ caStep: "verify", loading: false }), 700);
+      },
+      caCode,
+      onCaCode: this.onField("caCode"),
+      onCaVerify: () => this.setState({ caCode: caCode || "123456", caStep: "success" }),
+      onCaBack: () => this.setState({ caStep: "form" }),
+
+      cardStyle: { width: "100%", maxWidth: mode === "create" ? 440 : 410, background: "#ffffff", border: "1px solid var(--gray-200)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: "24px", boxSizing: "border-box" },
+      googleBtnStyle: { width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", height: "40px", border: "1px solid var(--gray-300)", borderRadius: "var(--radius-md)", font: "500 14px/20px var(--font-body)", cursor: "pointer", background: "#fff", color: "var(--gray-800)", boxShadow: "inset 0 -2px 0 0 rgba(10,13,18,0.05)" },
+      navIconStyle: { width: 36, height: 36, borderRadius: "12px", display: "inline-flex", alignItems: "center", justifyContent: "center", background: "transparent", border: "none", color: "var(--gray-500)", cursor: "pointer" },
+      tipStyle: { position: "absolute", top: "calc(100% + 8px)", left: "50%", transform: "translateX(-50%)", zIndex: 90, pointerEvents: "none", whiteSpace: "nowrap", background: "var(--gray-900)", color: "#ffffff", borderRadius: "var(--radius-sm)", padding: "4px 8px", font: "var(--fw-medium) var(--text-xs-size)/var(--text-xs-lh) var(--font-body)", boxShadow: "var(--shadow-md)" },
+      headerLoginBtnStyle: { ...btnBase, background: "var(--blue-600)", border: "1px solid transparent", color: "#ffffff", boxShadow: "var(--shadow-xs), inset 0 0 0 1px rgba(0,0,0,0.2)" },
+
+      inputBaseStyle: inputBase,
+      inputStyleMb: { ...inputBase, marginBottom: "20px" },
+      inputStyleMbSm: { ...inputBase, marginBottom: "10px" },
+      codeInputStyle: { ...inputBase, marginBottom: "20px", letterSpacing: "0.3em", textAlign: "center", fontSize: "18px" },
+
+      h1Style: { font: "600 22px/1.3 var(--font-body)", color: "var(--gray-900)", textAlign: "center", margin: "0 0 6px" },
+      subStyle: { font: "400 14px/20px var(--font-body)", color: "var(--gray-600)", textAlign: "center", margin: "0 0 20px", textWrap: "pretty" },
+      labelStyle: { display: "block", font: "500 14px/20px var(--font-body)", color: "var(--gray-700)", marginBottom: "6px" },
+      backRowStyle: { textAlign: "center", margin: "20px 0 0" },
+      linkBtnStyle: { background: "none", border: "none", padding: 0, cursor: "pointer", font: "500 14px/20px var(--font-body)", color: "var(--blue-800)", textDecoration: "none" },
+      primaryLinkStyle: { display: "flex", alignItems: "center", justifyContent: "center", height: "40px", borderRadius: "var(--radius-md)", background: "var(--blue-600)", color: "#fff", textDecoration: "none", font: "500 14px/20px var(--font-body)", boxShadow: "var(--shadow-xs), inset 0 0 0 1px rgba(0,0,0,0.2)" },
+      primaryLinkBtnStyle: { width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "40px", border: "none", borderRadius: "var(--radius-md)", background: "var(--blue-600)", color: "#fff", textDecoration: "none", font: "500 14px/20px var(--font-body)", boxShadow: "var(--shadow-xs), inset 0 0 0 1px rgba(0,0,0,0.2)", cursor: "pointer", boxSizing: "border-box" },
+      primaryBtnStyle: { width: "100%", height: "40px", border: "none", borderRadius: "var(--radius-md)", font: "500 14px/20px var(--font-body)", cursor: "pointer", background: "var(--blue-600)", color: "#fff", boxShadow: "var(--shadow-xs), inset 0 0 0 1px rgba(0,0,0,0.2)" },
+      primaryBtnStyleMt: { width: "100%", height: "40px", border: "none", borderRadius: "var(--radius-md)", font: "500 14px/20px var(--font-body)", cursor: "pointer", background: "var(--blue-600)", color: "#fff", boxShadow: "var(--shadow-xs), inset 0 0 0 1px rgba(0,0,0,0.2)", marginTop: "6px" },
+      secondaryBtnStyle: { width: "100%", height: "40px", border: "1px solid var(--gray-300)", borderRadius: "var(--radius-md)", font: "500 14px/20px var(--font-body)", cursor: "pointer", background: "#fff", color: "var(--gray-700)", boxShadow: "inset 0 -2px 0 0 rgba(10,13,18,0.05)" },
+      submitStyle: { width: "100%", height: "40px", border: "none", borderRadius: "var(--radius-md)", font: "500 14px/20px var(--font-body)", cursor: "pointer", background: "var(--blue-600)", color: "#fff", boxShadow: "var(--shadow-xs), inset 0 0 0 1px rgba(0,0,0,0.2)", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" },
+      iconCircleStyle: { width: "48px", height: "48px", borderRadius: "var(--radius-full)", background: "var(--blue-25)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" },
+      iconCircleSuccessStyle: { width: "48px", height: "48px", borderRadius: "var(--radius-full)", background: "var(--success-50)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" },
+      iconCircleErrorStyle: { width: "48px", height: "48px", borderRadius: "var(--radius-full)", background: "var(--error-50)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
