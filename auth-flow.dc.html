@@ -152,7 +152,7 @@ class Component extends DCLogic {
     p.set("boot", "1");
     if (this.state.credToken) p.set("claim", this.state.credToken);
     Object.keys(extra || {}).forEach((k) => p.set(k, extra[k]));
-    return "Credential%20Store%20Student.dc.html?" + p.toString();
+    return "credential-store-student.dc.html?" + p.toString();
   }
 
   // Prototype-only: a real build requires the actual emailed code. This just unblocks the demo,

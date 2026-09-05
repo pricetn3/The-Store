@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="{{ data.wrap }}">
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+    <div style="min-width: 0;">
+      <h2 style="font: var(--fw-semibold) var(--text-md-size)/var(--text-md-lh) var(--font-display); color: var(--gray-900); margin: 0 0 3px;">Mailing address</h2>
+      <p style="font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-500); margin: 0; text-wrap: pretty;">Pre-fills when you order or replace a certificate.</p>
+    </div>
+    <sc-if value="{{ data.view }}" hint-placeholder-val="{{ true }}">
+      <button onClick="{{ data.onEdit }}" style="{{ data.btnEdit }}" style-hover="{{ data.btnSecondaryHover }}" style-focus="{{ data.focusRing }}">
+        Edit
+      </button>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ data.verifyPending }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--warning-50); border: 1px solid var(--warning-200); border-radius: var(--radius-lg); padding: 11px 13px; margin-top: 14px;">
+      <span style="display: flex; align-items: flex-start; gap: 9px; min-width: 0;">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--warning-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+        <span style="font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--warning-700); text-wrap: pretty;">{{ data.verifyText }}</span>
+      </span>
+      <button onClick="{{ data.onConfirm }}" style="{{ data.btnPrimary }}" style-hover="{{ data.btnPrimaryHover }}" style-focus="{{ data.focusRing }}">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+        Confirm address
+      </button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ data.verifyConfirmed }}" hint-placeholder-val="{{ false }}">
+    <div style="display: flex; align-items: flex-start; gap: 9px; background: var(--success-50); border: 1px solid var(--success-200); border-radius: var(--radius-lg); padding: 11px 13px; margin-top: 14px;">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="var(--success-500)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;"><path d="M20 6 9 17l-5-5"></path></svg>
+      <span style="font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--success-700); text-wrap: pretty;">{{ data.verifyText }}</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ data.view }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ data.hasAddress }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; align-items: flex-start; gap: 13px; border: 1px solid var(--gray-200); background: var(--gray-25); border-radius: 12px; padding: 15px 16px; margin-top: 16px;">
+        <span style="width: 38px; height: 38px; flex-shrink: 0; border-radius: 999px; background: var(--blue-50); color: var(--blue-600); display: inline-flex; align-items: center; justify-content: center;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </span>
+        <div style="min-width: 0;">
+          <div style="font: var(--fw-semibold) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-900); margin-bottom: 4px;">{{ data.name }}</div>
+          <div style="font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-600); text-wrap: pretty;">{{ data.line1 }}<br>{{ data.line2 }}<br>{{ data.country }}</div>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ data.noAddress }}" hint-placeholder-val="{{ false }}">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding: 14px 16px; border: 1.5px dashed var(--gray-300); border-radius: 12px; background: var(--gray-25);">
+        <span style="font: var(--fw-regular) var(--text-sm-size)/var(--text-sm-lh) var(--font-body); color: var(--gray-600); text-wrap: pretty;">No mailing address saved yet.</span>
+        <button onClick="{{ data.onEdit }}" style="{{ data.btnPrimary }}" style-hover="{{ data.btnPrimaryHover }}" style-focus="{{ data.focusRing }}">Add address</button>
+      </div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ data.edit }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top: 16px;">
+      <div style="{{ data.formRow }}">
+        <label style="display: block;"><span style="{{ data.fieldLabel }}">First name</span><input value="{{ data.adFirst }}" onChange="{{ data.onAdFirst }}" autoComplete="given-name" style="{{ data.inputStyle }}" style-focus="{{ data.inputFocus }}"></label>
+        <label style="display: block;"><span style="{{ data.fieldLabel }}">Last name</span><input value="{{ data.adLast }}" onChange="{{ data.onAdLast }}" autoComplete="family-name" style="{{ data.inputStyle }}" style-focus="{{ data.inputFocus }}"></label>
+      </div>
+      <div style="{{ data.streetRowStyle }}; margin-top: 20px;">
+        <label style="display: block;"><span style="{{ data.fieldLabel }}">Street address</span><input value="{{ data.adStreet }}" onChange="{{ data.onAdStreet }}" autoComplete="address-line1" style="{{ data.inputStyle }}" style-focus="{{ data.inputFocus }}"></label>
+        <label style="display: block;"><span style="{{ data.fieldLabel }}">Apt / Suite <span style="color: var(--gray-400); font-weight: 400;">(optional)</span></span><input value="{{ data.adApt }}" onChange="{{ data.onAdApt }}" autoComplete="address-line2" style="{{ data.inputStyle }}" style-focus="{{ data.inputFocus }}"></label>
+      </div>
+      <div style="{{ data.tripletStyle }}; margin-top: 20px;">
+        <label style="display: block;"><span style="{{ data.fieldLabel }}">City</span><input value="{{ data.adCity }}" onChange="{{ data.onAdCity }}" autoComplete="address-level2" style="{{ data.inputStyle }}" style-focus="{{ data.inputFocus }}"></label>
+        <label style="display: block;">
+          <span style="{{ data.fieldLabel }}">State</span>
+          <select value="{{ data.adState }}" onChange="{{ data.onAdState }}" autoComplete="address-level1" style="{{ data.selectStyle }}" style-focus="{{ data.inputFocus }}">
+            <sc-for list="{{ data.usStates }}" as="st" hint-placeholder-count="1">
+              <option value="{{ st }}">{{ st }}</option>
+            </sc-for>
+          </select>
+        </label>
+        <label style="display: block;"><span style="{{ data.fieldLabel }}">ZIP</span><input value="{{ data.adZip }}" onChange="{{ data.onAdZip }}" autoComplete="postal-code" style="{{ data.inputStyle }}" style-focus="{{ data.inputFocus }}"></label>
+      </div>
+      <div style="margin-top: 20px;">
+        <label style="display: block;">
+          <span style="{{ data.fieldLabel }}">Country</span>
+          <select value="{{ data.adCountry }}" onChange="{{ data.onAdCountry }}" autoComplete="country-name" style="{{ data.selectStyle }}" style-focus="{{ data.inputFocus }}">
+            <sc-for list="{{ data.countries }}" as="ct" hint-placeholder-count="1">
+              <option value="{{ ct }}">{{ ct }}</option>
+            </sc-for>
+          </select>
+        </label>
+      </div>
+      <div style="{{ data.footer }}">
+        <button onClick="{{ data.onCancel }}" style="{{ data.btnSecondary }}" style-hover="{{ data.btnSecondaryHover }}" style-focus="{{ data.focusRing }}">Cancel</button>
+        <button onClick="{{ data.onSave }}" aria-disabled="{{ data.saveAria }}" style="{{ data.saveStyle }}" style-hover="{{ data.btnPrimaryHover }}" style-focus="{{ data.focusRing }}">Save changes</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:640,&quot;height&quot;:300}}"></script>
+</body>
+</html>

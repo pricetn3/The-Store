@@ -25,11 +25,7 @@
   a { text-decoration: none; color: var(--blue-700); }
   a:hover { color: var(--blue-800); }
   a.cc-textlink { text-decoration: underline; }
-  .cc-tips-mobile { display: none; }
-  @media (max-width: 480px) {
-    .cc-tips-desktop { display: none !important; }
-    .cc-tips-mobile { display: block !important; }
-  }
+
 </style>
 </helmet>
 
@@ -196,15 +192,19 @@
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 12px;">
-              <a href="Auth%20Flow.dc.html?src=email&amp;token=MW-COS-7F3A9" style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; background: var(--blue-600); color: #fff; border-radius: var(--radius-md); font: var(--fw-semibold) 14px/20px var(--font-body); box-shadow: var(--shadow-button-primary); height: 40px; width: 180px" style-hover="{{ ctaPrimaryHover }}">View credential
+              <a href="auth-flow.dc.html?src=email&amp;token=MW-COS-7F3A9" style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; background: var(--blue-600); color: #fff; border-radius: var(--radius-md); font: var(--fw-semibold) 14px/20px var(--font-body); box-shadow: var(--shadow-button-primary); height: 40px; width: 180px" style-hover="{{ ctaPrimaryHover }}">View credential
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
               </a>
               
             </div>
             <p style="font: var(--fw-regular) 13px/19px var(--font-body); color: #667085; text-align: left; margin: 12px 0 0">This link expires on {{ linkExpiresDate }}</p>
 
-            <img src="assets/credential-tips-graphic.png" width="600" alt="More ways to use your credential" class="cc-tips-desktop" style="width: 598%; max-width: 600px; height: auto; display: block; margin: 24px -24px 0; margin-top: 0px">
-            <img src="assets/credential-tips-graphic-mobile.png" width="600" alt="More ways to use your credential" class="cc-tips-mobile" style="width: 598%; max-width: 600px; height: auto; margin: 24px -24px 0; margin-top: 0px">
+            <sc-if value="{{ isDesktopView }}" hint-placeholder-val="{{ true }}">
+              <img src="assets/credential-tips-graphic.png" width="600" alt="More ways to use your credential" style="width: 598%; max-width: 600px; height: auto; display: block; margin: 24px -24px 0; margin-top: 0px">
+            </sc-if>
+            <sc-if value="{{ isMobileView }}" hint-placeholder-val="{{ false }}">
+              <img src="assets/credential-tips-graphic-mobile.png" width="600" alt="More ways to use your credential" style="width: 598%; max-width: 600px; height: auto; margin: 24px -24px 0; margin-top: 0px">
+            </sc-if>
 
             
             <sc-if value="{{ e1Mail }}" hint-placeholder-val="{{ true }}">
@@ -295,7 +295,7 @@
             </div>
             <p style="{{ noteP }}">You'll receive a tracking email once your replacement ships.</p>
             <div style="{{ ctaWrap }}">
-              <a href="Credential%20Store%20Student.dc.html" style="{{ ctaSecondaryFull }}">Back to store</a>
+              <a href="credential-store-student.dc.html" style="{{ ctaSecondaryFull }}">Back to store</a>
             </div>
           </div>
         </sc-if>
@@ -318,7 +318,7 @@
               <div style="{{ sumRowB }}"><span style="{{ sumLabel }}">Request type</span><span style="{{ sumVal }}">{{ manualReqType }}</span></div>
             </div>
             <div style="{{ ctaWrap }}">
-              <a href="Credential%20Store%20Student.dc.html" style="{{ ctaSecondaryFull }}">Back to store</a>
+              <a href="credential-store-student.dc.html" style="{{ ctaSecondaryFull }}">Back to store</a>
             </div>
           </div>
         </sc-if>
@@ -672,6 +672,7 @@ class Component extends DCLogic {
       e8: e === "e8",
 
       tlDesktop: d, tlMobile: !d,
+      isDesktopView: d, isMobileView: !d,
       approvedHeading: "Your certificate replacement is confirmed",
       approvedBody: "Hi Maya, your certificate replacement request has been received and approved. Your replacement is being processed.",
       approvedReqType: "Certificate replacement",
