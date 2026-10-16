@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Credential authenticated | Paradigm</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+  <!-- Credential Connections design system: tokens first, then component recipes -->
+  <link rel="stylesheet" href="../../design-system/tokens.css">
+  <link rel="stylesheet" href="../../design-system/components.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <img class="site-header__logo" src="assets/paradigm-logo.svg" alt="Paradigm">
+    </header>
+
+    <main class="auth">
+      <span class="cc-badge cc-badge--success">
+        Authenticated via <span class="surety">SURETY<strong>LOCK</strong></span>
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      </span>
+
+      <h1 class="auth__title">The publication of this credential has been authenticated.</h1>
+      <p class="auth__lede">View publication information below.</p>
+
+      <section class="cc-card credential" aria-labelledby="credential-heading">
+        <img class="credential__corner" src="assets/surety-corner.svg" alt="">
+        <img class="credential__institution-logo" src="assets/vhu-logo.svg" alt="Virginia Hanock University">
+        <hr class="credential__divider">
+        <h2 id="credential-heading" class="credential__heading">Credential details</h2>
+        <dl class="credential__details">
+          <div class="credential__row">
+            <dt>Institution</dt>
+            <dd>Virginia Hanock University</dd>
+          </div>
+          <div class="credential__row">
+            <dt>Recipient</dt>
+            <dd>Maya Wright</dd>
+          </div>
+          <div class="credential__row">
+            <dt>Conferral date</dt>
+            <dd class="tabular"><time datetime="2026-03-16">03/16/2026</time></dd>
+          </div>
+          <div class="credential__row">
+            <dt>Publisher</dt>
+            <dd>Paradigm, Inc.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="auth__actions">
+        <a class="cc-btn cc-btn--primary cc-btn--block" href="../../auth-flow.dc.html?state=expired&amp;src=scan&amp;open=first">
+          Access my credentials
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </a>
+      </div>
+
+      <p class="auth__summary">Order paper credential copies, download and share digital credentials, and validate credential details.</p>
+      <p class="auth__timestamp">Accessed on <time datetime="2026-10-12T09:20">Mon, October 12th 2026 at 9:20 AM</time>.</p>
+    </main>
+
+    <footer class="site-footer">
+      <p class="site-footer__copyright">© 2026 Paradigm, Inc.</p>
+      <p>All Rights Reserved. Proudly made in the USA.</p>
+    </footer>
+  </div>
+</body>
+</html>
