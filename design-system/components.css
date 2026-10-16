@@ -7,7 +7,8 @@
    them, and the drift check measures pages against the same values.
 
    Standards
-     Buttons   heights 36 / 40 / 44 (sm / md / lg), radius-md, text-sm medium
+     Buttons   heights 32 / 36 / 40 / 44 (xs / sm / md / lg), radius-md, text-sm medium
+     Access    WCAG 2.2 AA: every control's target is at least 24 x 24px (2.5.8)
      Inputs    height 40, 1px gray-300 border, radius-md, focus ring blue-400
      Badges    pill (radius-full), text-xs, tinted bg + 200 border + 700 text
      Cards     bg-primary, 1px gray-200 border, radius-xl, shadow-xs
@@ -31,6 +32,8 @@
 }
 .cc-btn:focus-visible { outline: none; box-shadow: var(--ring-focus); }
 
+/* xs: compact rows, tables and inline actions. 32px stays above the 24px WCAG target minimum. */
+.cc-btn--xs { height: 32px; padding: 0 var(--space-3); gap: var(--space-1_5); }
 .cc-btn--sm { height: 36px; padding: 0 var(--space-3_5); }
 .cc-btn--lg { height: 44px; padding: 0 var(--space-5); font-size: var(--text-md-size); line-height: var(--text-md-lh); }
 .cc-btn--block { width: 100%; }
@@ -54,6 +57,7 @@
   background: transparent; color: var(--gray-500); cursor: pointer;
 }
 .cc-icon-btn:hover { background: var(--gray-100); color: var(--gray-900); }
+.cc-icon-btn--xs { width: 32px; height: 32px; }
 .cc-icon-btn:focus-visible { outline: none; box-shadow: var(--ring-focus); }
 
 /* ---------- Inputs ---------- */

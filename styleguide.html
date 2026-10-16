@@ -103,6 +103,7 @@
         <span class="cc-badge cc-badge--brand" id="sg-token-count">Tokens</span>
         <span class="cc-badge">Foundation: Untitled UI</span>
         <span class="cc-badge">Typeface: Inter</span>
+        <span class="cc-badge cc-badge--success">Standard: WCAG 2.2 AA</span>
       </div>
     </header>
 
@@ -145,7 +146,7 @@
 
     <section id="buttons">
       <h2>Buttons</h2>
-      <p>One primary action per view. Use secondary for the alternatives, and tertiary for low-emphasis actions such as "Cancel".</p>
+      <p>One primary action per view. Use secondary for the alternatives, and tertiary for low-emphasis actions such as "Cancel". Use extra small only in dense spots such as table rows and inline actions.</p>
       <div class="sg-panel">
         <h3 style="margin-top:0">Hierarchy</h3>
         <div class="sg-row">
@@ -157,16 +158,18 @@
         </div>
         <h3>Sizes</h3>
         <div class="sg-row">
+          <button class="cc-btn cc-btn--primary cc-btn--xs">Extra small · 32</button>
           <button class="cc-btn cc-btn--primary cc-btn--sm">Small · 36</button>
           <button class="cc-btn cc-btn--primary">Medium · 40</button>
           <button class="cc-btn cc-btn--primary cc-btn--lg">Large · 44</button>
         </div>
         <table class="sg-spec">
           <tr><th>Class</th><th>Height</th><th>Background</th><th>Label</th><th>Shadow</th></tr>
-          <tr><td><code>cc-btn--primary</code></td><td>36 / 40 / 44</td><td><code>--blue-600</code> → hover <code>--blue-700</code></td><td><code>--fg-on-brand</code>, text-sm medium</td><td><code>--shadow-button-primary</code></td></tr>
-          <tr><td><code>cc-btn--secondary</code></td><td>36 / 40 / 44</td><td><code>--bg-primary</code>, 1px <code>--gray-300</code></td><td><code>--gray-700</code></td><td><code>--shadow-button-secondary</code></td></tr>
-          <tr><td><code>cc-btn--tertiary</code></td><td>36 / 40 / 44</td><td>transparent → hover <code>--gray-100</code></td><td><code>--gray-600</code></td><td>none</td></tr>
-          <tr><td>Focus (all)</td><td colspan="4"><code>--ring-focus</code>: 2px <code>--blue-400</code></td></tr>
+          <tr><td><code>cc-btn--primary</code></td><td>32 / 36 / 40 / 44</td><td><code>--blue-600</code> → hover <code>--blue-700</code></td><td><code>--fg-on-brand</code>, text-sm medium</td><td><code>--shadow-button-primary</code></td></tr>
+          <tr><td><code>cc-btn--secondary</code></td><td>32 / 36 / 40 / 44</td><td><code>--bg-primary</code>, 1px <code>--gray-300</code></td><td><code>--gray-700</code></td><td><code>--shadow-button-secondary</code></td></tr>
+          <tr><td><code>cc-btn--tertiary</code></td><td>32 / 36 / 40 / 44</td><td>transparent → hover <code>--gray-100</code></td><td><code>--gray-600</code></td><td>none</td></tr>
+          <tr><td>Focus (all)</td><td colspan="4"><code>--ring-focus</code>: 2px <code>--blue-400</code> (3:1 or more against white, WCAG 2.4.7 / 1.4.11)</td></tr>
+          <tr><td>Target size</td><td colspan="4">Extra small (32px) is the smallest button. Nothing interactive goes below 24 × 24px (WCAG 2.2, 2.5.8).</td></tr>
         </table>
       </div>
     </section>

@@ -9,6 +9,7 @@ anything that has drifted:
   * colors typed out by hand instead of using a token
   * colors that aren't in the system at all
   * corner radii and button heights that are off the scale
+  * buttons smaller than the WCAG 2.2 AA 24px target minimum
   * typefaces other than Inter / Roboto Mono
 
 Usage:
@@ -32,7 +33,8 @@ ALLOWLIST = os.path.join(ROOT, "design-system", "drift-allowlist.json")
 # Pages that are part of the design system itself, not prototypes.
 SKIP = {"styleguide.html"}
 
-BUTTON_HEIGHTS = {36, 40, 44}       # sm / md / lg, see components.css
+BUTTON_HEIGHTS = {32, 36, 40, 44}   # xs / sm / md / lg, see components.css
+MIN_TARGET = 24                     # WCAG 2.2 AA, 2.5.8 Target Size (Minimum)
 ICON_BUTTON_SIZES = {32, 36, 40}
 ALLOWED_FONTS = {"inter", "roboto mono", "system-ui", "-apple-system", "blinkmacsystemfont",
                  "sans-serif", "monospace", "ui-monospace", "sfmono-regular", "menlo", "inherit"}
@@ -208,6 +210,7 @@ def check_page(path, canon, color_to_token, allowed_colors):
 
     # 4. Button heights --------------------------------------------------------
     odd = collections.defaultdict(set)
+    tiny = collections.defaultdict(set)   # below the WCAG target minimum
     for m in re.finditer(r"\b(?:min[hH]eight|height)\s*:\s*[\"']?(\d+)(?:px)?[\"']?", body):
         name = style_name_at(body, m.start())
         if not name or not re.search(r"Btn|Button", name):
@@ -215,12 +218,18 @@ def check_page(path, canon, color_to_token, allowed_colors):
         h = int(m.group(1))
         if h == 0 or h > 56:      # collapsed/animated states and large tiles aren't buttons sizes
             continue
+        if h < MIN_TARGET:
+            tiny[h].add(name)
+            continue
         sizes = ICON_BUTTON_SIZES if re.search(r"Icon|Menu|Close|Collapse|Avatar|support", name, re.I) else BUTTON_HEIGHTS
         if h not in sizes:
             odd[h].add(name)
     if odd:
         parts = [f"{h}px ({', '.join(sorted(names)[:3])}{' …' if len(names) > 3 else ''})" for h, names in sorted(odd.items())]
-        warnings.append("Button heights off the 36 / 40 / 44 scale: " + "; ".join(parts))
+        warnings.append("Button heights off the 32 / 36 / 40 / 44 scale: " + "; ".join(parts))
+    for h, names in sorted(tiny.items()):
+        errors.append(f"Button only {h}px tall: below the 24px WCAG 2.2 AA target minimum (2.5.8): "
+                      + ", ".join(sorted(names)[:4]) + (" …" if len(names) > 4 else ""))
 
     # 5. Typefaces ----------------------------------------------------------------
     fonts = set()

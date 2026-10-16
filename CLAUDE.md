@@ -7,9 +7,21 @@ Live prototypes published with GitHub Pages. The owner is a designer, not a deve
 - Don't hand-edit these exports. Changes are made in Claude Design and re-exported. Edits made here would be overwritten by the next export.
 - `emails/` holds plain HTML email templates, which can be edited directly.
 
+## Accessibility standard
+Everything here must meet the **most recent WCAG version at level AA**. Today that's **WCAG 2.2 AA**. When a newer WCAG version is published, adopt it, check the design system and prototypes against it, and update this note, the style guide badge, and the drift check.
+
+It applies to tokens, components, the style guide, every prototype, and every review or suggestion you make. Criteria that come up most often here:
+- **Contrast (1.4.3, 1.4.11):** 4.5:1 for body text; 3:1 for large text (18px+, or 14px+ bold), icons, input borders, and focus indicators.
+- **Focus (2.4.7, 2.4.11):** a visible focus ring on every interactive element (`--ring-focus`, 2px solid), never hidden behind sticky headers or overlays.
+- **Target size (2.5.8):** interactive targets at least 24 × 24px. The smallest button is xs at 32px.
+- **Not color alone (1.4.1):** status badges pair color with a text label.
+- **Reflow (1.4.10):** layouts work at 320px wide without horizontal scrolling.
+
+When something in the system or a prototype doesn't meet the standard, flag it to the owner in plain language with the criterion number, even when it wasn't asked about.
+
 ## Design system (source of truth)
 - `design-system/tokens.css`: the canonical token values (colors, type, spacing, radius, shadows). Every export should carry exactly this set.
-- `design-system/components.css`: the standard recipes for buttons (36/40/44), inputs, badges, cards and links.
+- `design-system/components.css`: the standard recipes for buttons (xs 32 / sm 36 / md 40 / lg 44), inputs, badges, cards and links.
 - `styleguide.html`: the living style guide, rendered from the two files above. It is published on GitHub Pages at `/styleguide.html`.
 - `design-system/drift-allowlist.json`: non-token colors that are allowed (partner brands, third-party buttons). Each entry has a note.
 
