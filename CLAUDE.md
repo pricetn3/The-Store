@@ -16,6 +16,15 @@ Live prototypes published with GitHub Pages. The owner is a designer, not a deve
 ## Shared tokens on live pages
 Every export is linked to `design-system/tokens.css`: `tools/link_tokens.py` adds one `<link data-cc-shared-tokens>` right after the export's own token block, so the shared file wins and the built-in copy is only a fallback. Changing a token value in `tokens.css` and publishing updates every linked page. Components are still built into each export, so component changes need a re-export from Claude Design.
 
+Other prototype repos (in `~/Documents/GitHub`) are linked to the same file by its full web address, `https://pricetn3.github.io/The-Store/design-system/tokens.css`, so a token change pushed here updates them too:
+- `CC-External-Prototype`: `external.html`, `internal.html` (`index.html` is a plain menu page, not an export)
+- `CC-Internal-Prototype`: `index.html`
+- `The-Store-Viewer`: `index.html`
+
+After a new export in one of those repos, link it by path: `python3 tools/link_tokens.py <path to page>`. That repo then needs its own push.
+
+The focus ring standard is the 2px solid `--ring-focus` (the owner chose it over the older 4px soft halo for accessibility).
+
 The master is the Credential Connections Design System in Claude Design. Change tokens there first, then mirror the change in `tokens.css`. Don't make token changes only in the repo.
 
 ## After every new export, before publishing
