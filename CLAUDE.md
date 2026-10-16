@@ -18,8 +18,8 @@ Every export is linked to `design-system/tokens.css`: `tools/link_tokens.py` add
 
 Other prototype repos (in `~/Documents/GitHub`) are linked to the same file by its full web address, `https://pricetn3.github.io/The-Store/design-system/tokens.css`, so a token change pushed here updates them too:
 - `CC-External-Prototype`: `external.html`, `internal.html` (`index.html` is a plain menu page, not an export)
-- `CC-Internal-Prototype`: `index.html`
-- `The-Store-Viewer`: `index.html`
+
+`CC-Internal-Prototype` and `The-Store-Viewer` are retired (2026-10-16): their content now lives in the prototypes above. Don't update them.
 
 After a new export in one of those repos, link it by path: `python3 tools/link_tokens.py <path to page>`. That repo then needs its own push.
 
