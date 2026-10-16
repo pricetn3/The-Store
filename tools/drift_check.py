@@ -133,6 +133,9 @@ def check_page(path, canon, color_to_token, allowed_colors):
     is_email = os.sep + "emails" + os.sep in os.sep + os.path.relpath(path, ROOT)
     errors, warnings, notes = [], [], []
 
+    if is_export and "data-cc-shared-tokens" not in html:
+        errors.append("Not linked to the shared tokens file. Run: python3 tools/link_tokens.py")
+
     # 1. Token values ------------------------------------------------------
     page_tokens = load_tokens(html)
     if not is_email:
