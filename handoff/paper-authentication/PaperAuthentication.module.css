@@ -2,30 +2,23 @@
    Paper credential authentication page
    ---------------------------------------------------------------------
    Page layout only. Colors, type, spacing and radius come from
-   design-system/tokens.css; the badge, card and button come from
-   design-system/components.css.
+   design-system/tokens.css; the badge, card and button use the global
+   cc-* classes from design-system/components.css.
    ===================================================================== */
 
-:root {
-  /* Institution accent on the credential card. Comes from the issuing
-     institution's brand, so it changes per institution. */
-  --institution-accent: #0086C4;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--gray-50);
   color: var(--gray-900);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
-
-.page { min-height: 100vh; display: flex; flex-direction: column; }
+.page * { box-sizing: border-box; }
 
 /* ---------- Header / footer ---------- */
-.site-header {
+.siteHeader {
   display: flex;
   align-items: center;
   padding: var(--space-4) var(--space-8);
@@ -33,17 +26,17 @@ body {
   border-bottom: 1px solid var(--gray-200);
   box-shadow: var(--shadow-xs);
 }
-.site-header__logo { display: block; height: 32px; width: auto; }
+.siteHeaderLogo { display: block; height: 32px; width: auto; }
 
-.site-footer {
+.siteFooter {
   padding: var(--space-5) var(--space-8);
   background: var(--bg-primary);
   border-top: 1px solid var(--gray-200);
   font: var(--fw-regular) 13px/20px var(--font-body);
   color: var(--gray-600);
 }
-.site-footer p { margin: 0; }
-.site-footer__copyright { color: var(--gray-900); }
+.siteFooter p { margin: 0; }
+.copyright { color: var(--gray-900); }
 
 /* ---------- Main column ---------- */
 .auth {
@@ -61,13 +54,13 @@ body {
 .surety { letter-spacing: 0.02em; }
 .surety strong { font-weight: var(--fw-bold); }
 
-.auth__title {
+.title {
   margin: var(--space-4) 0 var(--space-1_5);
   font: var(--fw-semibold) var(--text-display-sm-size)/var(--text-display-sm-lh) var(--font-body);
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.auth__lede {
+.lede {
   margin: 0;
   font: var(--fw-regular) var(--text-lg-size)/var(--text-lg-lh) var(--font-body);
   color: var(--gray-600);
@@ -80,10 +73,11 @@ body {
   width: 100%;
   margin-top: var(--space-6);
   padding: var(--space-6) 28px;
-  border-left: 8px solid var(--institution-accent);
+  /* --institution-accent is set inline from the institution's brand color */
+  border-left: 8px solid var(--institution-accent, var(--blue-600));
   text-align: left;
 }
-.credential__corner {
+.corner {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -91,14 +85,14 @@ body {
   height: auto;
   pointer-events: none;
 }
-.credential__institution-logo { display: block; height: 36px; width: auto; }
-.credential__divider { height: 1px; margin: var(--space-4) 0; border: 0; background: var(--gray-200); }
-.credential__heading {
+.institutionLogo { display: block; height: 36px; width: auto; }
+.divider { height: 1px; margin: var(--space-4) 0; border: 0; background: var(--gray-200); }
+.heading {
   margin: 0 0 var(--space-3);
   font: var(--fw-semibold) var(--text-lg-size)/var(--text-lg-lh) var(--font-body);
 }
 
-.credential__details {
+.details {
   position: relative; /* keeps text above the corner art */
   display: flex;
   flex-direction: column;
@@ -106,42 +100,42 @@ body {
   margin: 0;
   font: var(--fw-regular) var(--text-15-size)/var(--text-15-lh) var(--font-body);
 }
-.credential__row { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--space-0_5); }
-.credential__row dt { color: var(--gray-600); }
-.credential__row dd { margin: 0; font-weight: var(--fw-semibold); overflow-wrap: anywhere; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: var(--space-0_5); }
+.row dt { color: var(--gray-600); }
+.row dd { margin: 0; font-weight: var(--fw-semibold); overflow-wrap: anywhere; }
 .tabular { font-variant-numeric: tabular-nums; }
 
 /* ---------- Action + footnotes ---------- */
-.auth__actions { width: 100%; max-width: 320px; margin-top: var(--space-6); }
+.actions { width: 100%; max-width: 320px; margin-top: var(--space-6); }
 
-.auth__summary {
+.summary {
   margin: 28px 0 0;
   font: var(--fw-regular) var(--text-15-size)/var(--text-15-lh) var(--font-body);
   color: var(--gray-700);
   text-wrap: pretty;
 }
-.auth__timestamp {
+.timestamp {
   margin: var(--space-5) 0 0;
   font: var(--fw-regular) var(--text-xs-size)/var(--text-xs-lh) var(--font-body);
-  color: var(--gray-600);
+  color: var(--gray-600); /* gray-500 on gray-50 is ~4.4:1, under WCAG 1.4.3 */
 }
 
 /* ---------- Wider screens ---------- */
 /* 520px+: label and value sit side by side. */
 @media (min-width: 520px) {
-  .credential__details { gap: var(--space-2); }
-  .credential__row { grid-template-columns: 116px minmax(0, 1fr); column-gap: var(--space-6); }
+  .details { gap: var(--space-2); }
+  .row { grid-template-columns: 116px minmax(0, 1fr); column-gap: var(--space-6); }
 }
 /* 560px+: wider label column and full-size corner art. */
 @media (min-width: 560px) {
-  .credential__row { grid-template-columns: 140px minmax(0, 1fr); }
-  .credential__corner { width: 175px; }
+  .row { grid-template-columns: 140px minmax(0, 1fr); }
+  .corner { width: 175px; }
 }
 
 /* ---------- Small phones ---------- */
 @media (max-width: 400px) {
-  .site-header, .site-footer { padding-left: var(--space-4); padding-right: var(--space-4); }
+  .siteHeader, .siteFooter { padding-left: var(--space-4); padding-right: var(--space-4); }
   .auth { padding-left: var(--space-4); padding-right: var(--space-4); }
-  .auth__title { font-size: var(--text-display-xs-size); line-height: var(--text-display-xs-lh); }
+  .title { font-size: var(--text-display-xs-size); line-height: var(--text-display-xs-lh); }
   .credential { padding: var(--space-5); }
 }

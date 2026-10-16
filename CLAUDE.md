@@ -6,7 +6,14 @@ Live prototypes published with GitHub Pages. The owner is a designer, not a deve
 - The prototype pages (`*.dc.html`, `index.html`) are **exports from Claude Design**. Each one is a self-contained bundle; the real HTML sits JSON-encoded inside `<script type="__bundler/template">`.
 - Don't hand-edit these exports. Changes are made in Claude Design and re-exported. Edits made here would be overwritten by the next export.
 - `emails/` holds plain HTML email templates, which can be edited directly.
-- `handoff/` holds hand-written developer versions of finalized pages: one folder per page, with plain HTML, a page `styles.css` that uses only tokens, and a `README.md` spec (dynamic data, behavior, responsive, accessibility). They link `design-system/tokens.css` and `components.css` and can be edited directly. The Claude Design export stays the stakeholder prototype. When an export changes, update the matching handoff page to match.
+- `handoff/` holds hand-written developer versions of finalized pages. The developers use **React**, so each page folder has:
+  - a TypeScript component (`Name.tsx`) that takes the real data as props
+  - a CSS Module (`Name.module.css`) that uses only tokens, plus the global `cc-*` component classes
+  - an `assets/` folder
+  - a `README.md` spec (props, behavior, responsive, accessibility)
+  - an `index.html` preview that runs the component in the browser with no build step (React, ReactDOM and Babel from unpkg, with sample props), so it works on GitHub Pages
+
+  Handoff files can be edited directly. There is no Node on this Mac, so check components with the preview. The Claude Design export stays the stakeholder prototype. When an export changes, update the matching handoff component to match.
 - `tools/drift_check.py` only reads tokens built into a page, so it wrongly says handoff pages have "no design tokens." To check one, run it on the page's CSS combined with the two design system files.
 
 ## Accessibility standard
