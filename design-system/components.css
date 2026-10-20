@@ -9,7 +9,8 @@
    Standards
      Buttons   heights 32 / 36 / 40 / 44 (xs / sm / md / lg), radius-md, text-sm medium
      Access    WCAG 2.2 AA: every control's target is at least 24 x 24px (2.5.8)
-     Inputs    height 40, 1px gray-300 border, radius-md, focus ring blue-400
+     Inputs    height 40, 1px gray-300 border, radius-md, focus = 2px blue-600 edge inside the field
+     Icons     button icons beside a label sit one step lighter than the label
      Badges    pill (radius-full), text-xs, tinted bg + 200 border + 700 text
      Cards     bg-primary, 1px gray-200 border, radius-xl, shadow-xs
    ===================================================================== */
@@ -47,8 +48,21 @@
 .cc-btn--tertiary { background: transparent; color: var(--gray-600); }
 .cc-btn--tertiary:hover { background: var(--gray-100); color: var(--gray-800); }
 
+/* Icons beside a label are one step lighter than the label, matching the CC Platform.
+   They're decorative (the label carries the meaning), so 1.4.11 contrast doesn't apply.
+   Icon-only buttons use .cc-icon-btn, which keeps gray-500 (4.56:1). */
+.cc-btn > svg, .cc-btn > .lucide { flex-shrink: 0; transition: color 150ms cubic-bezier(0.2,0.6,0.2,1); }
+.cc-btn--primary > svg, .cc-btn--primary > .lucide { color: var(--blue-200); }
+.cc-btn--primary:hover > svg, .cc-btn--primary:hover > .lucide { color: var(--blue-300); }
+.cc-btn--secondary > svg, .cc-btn--secondary > .lucide,
+.cc-btn--tertiary > svg, .cc-btn--tertiary > .lucide { color: var(--gray-400); }
+.cc-btn--secondary:hover > svg, .cc-btn--secondary:hover > .lucide,
+.cc-btn--tertiary:hover > svg, .cc-btn--tertiary:hover > .lucide { color: var(--gray-500); }
+
 .cc-btn:disabled,
 .cc-btn[aria-disabled="true"] { background: var(--gray-100); color: var(--gray-400); box-shadow: none; cursor: not-allowed; pointer-events: none; }
+.cc-btn:disabled > svg, .cc-btn:disabled > .lucide,
+.cc-btn[aria-disabled="true"] > svg, .cc-btn[aria-disabled="true"] > .lucide { color: currentColor; }
 
 .cc-icon-btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -79,7 +93,11 @@
   outline: none;
 }
 .cc-input::placeholder { color: var(--gray-500); }
-.cc-input:focus { box-shadow: var(--shadow-xs), inset 0 0 0 1px var(--blue-400), var(--ring-focus); }
+/* Matches the CC Platform: a 2px blue-600 edge inside the field (5.46:1), no outer ring. */
+.cc-input:focus { box-shadow: var(--shadow-xs), inset 0 0 0 2px var(--blue-600); }
+/* Empty date/time fields read like placeholders; native picker icons sit at the gray-500 weight of other field icons. */
+.cc-input[data-empty="true"] { color: var(--gray-500); }
+.cc-input::-webkit-calendar-picker-indicator { opacity: 0.55; cursor: pointer; }
 .cc-input[aria-invalid="true"] { box-shadow: var(--shadow-xs), inset 0 0 0 1px var(--error-500); }
 .cc-input:disabled { background: var(--gray-50); color: var(--gray-500); cursor: not-allowed; }
 .cc-field .cc-hint--error { color: var(--error-700); }
