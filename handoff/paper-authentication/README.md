@@ -26,12 +26,14 @@ This is step 1 of the paper authentication flow:
 
 ## Using it
 
-The component needs the design system stylesheets loaded once, globally (for example in your root layout):
+The component needs the design system stylesheets loaded once, globally (for example in your root layout). They live in the [CC Design System](https://github.com/pricetn3/CC-Design-System) repo; copy them into the app or load the published versions:
 
 ```ts
-import 'path/to/design-system/tokens.css';      // tokens: colors, type, spacing, radius, shadows
-import 'path/to/design-system/components.css';  // cc-badge, cc-card, cc-btn
+import 'path/to/cc-design-system/tokens.css';      // tokens: colors, type, spacing, radius, shadows
+import 'path/to/cc-design-system/components.css';  // cc-badge, cc-card, cc-btn
 ```
+
+Published: `https://pricetn3.github.io/CC-Design-System/tokens.css` and `.../components.css`. The style guide at https://pricetn3.github.io/CC-Design-System/ shows every token and component.
 
 Inter (weights 400–700) also needs to be loaded.
 

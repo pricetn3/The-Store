@@ -2,8 +2,9 @@
    Paper credential authentication page
    ---------------------------------------------------------------------
    Page layout only. Colors, type, spacing and radius come from
-   design-system/tokens.css; the badge, card and button use the global
-   cc-* classes from design-system/components.css.
+   tokens.css; the badge, card and button use the global cc-* classes
+   from components.css. Both are in the CC Design System repo
+   (https://pricetn3.github.io/CC-Design-System/).
    ===================================================================== */
 
 .page {
